@@ -26,4 +26,4 @@ function iterate(input, iters) {
 }
 
 //iterate("1", 6);
-iterate("1113122113", 40);
+iterate("1113122113", 50);
