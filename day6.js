@@ -4,7 +4,7 @@ var bulbs = [];
 for (var i = 0; i < SIZE; i++) {
 	bulbs[i] = [];
 	for (var j = 0; j < SIZE; j++) {
-		bulbs[i][j] = false;
+		bulbs[i][j] = 0;
 	}
 }
 
@@ -36,9 +36,14 @@ function processLine(action, x0, y0, x1, y1) {
 	for (var i = x0; i <= x1; i++) {
 		for (var j = y0; j <= y1; j++) {
 			switch(action) {
-				case TURNOFF: bulbs[i][j] = false; break;
-				case TURNON:  bulbs[i][j] = true ; break;
-				case TOGGLE : bulbs[i][j] = !bulbs[i][j]; break;
+				case TURNOFF: bulbs[i][j] = 0; break;
+				case TURNON:  bulbs[i][j] = 1 ; break;
+				case TOGGLE : 
+					if (bulbs[i][j] > 0) {
+						bulbs[i][j] = 0;
+					} else {
+						bulbs[i][j] = 1;
+					}
 			}			
 		}
 	}
@@ -52,7 +57,7 @@ rl.on('close', function (line) {
 		var bulbsOn = 0;
 		for (var i = 0; i < SIZE; i++) {
 			for (var j = 0; j < SIZE; j++) {
-				if (bulbs[i][j]) { bulbsOn++; }
+				bulbsOn += bulbs[i][j];
 			}
 		}
 		console.log(bulbsOn);
