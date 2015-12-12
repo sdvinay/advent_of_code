@@ -65,5 +65,8 @@ console.log(hasStraight('abcd'));
 
 console.log(findNextGoodPassword('aahhz'));
 console.log(findNextGoodPassword(increment('aahhz')));
-console.log(findNextGoodPassword(increment('hxbxwxba')));
-console.log(findNextGoodPassword(increment('ghijklmn')));
+var input = 'hxbxwxba';
+var nextPassword = findNextGoodPassword(increment('hxbxwxba'))
+var nextPassword2 = findNextGoodPassword(increment(nextPassword))
+console.log(nextPassword);
+console.log(nextPassword2);
