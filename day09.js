@@ -24,14 +24,17 @@ function processLine(str) {
 function findBestOrdering(distances) {
 	var cities = Object.keys(distances);
 	var lowestScore = scoreOrdering(cities, distances);
+	var highestScore = scoreOrdering(cities, distances);
 	var generator = new Permutation(cities);
 	while (generator.hasNext()) {
 		var score = scoreOrdering(generator.next(), distances);
 		if (score < lowestScore)
 			lowestScore = score;
+		if (score > highestScore)
+			highestScore = score;
 	}
 	
-	return lowestScore;
+	return [lowestScore, highestScore];
 }
 
 function scoreOrdering(ordering, distances) {
