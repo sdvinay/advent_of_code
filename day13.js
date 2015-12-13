@@ -4,11 +4,6 @@ var happiness = {};
 
 var re = /(\w+) would (\w+) (\d+) happiness units by sitting next to (\w+)/;
 
-var rl = require('readline').createInterface({
-	  input: require('fs').createReadStream('input/input13.txt'),
-	  output: process.stdout,
-	  terminal: false
-  });
 
 function processLine(str) {
 	var matches = str.match(re);
@@ -48,6 +43,12 @@ function scoreOrdering(ordering, happiness) {
 	}
 	return score;
 }
+
+var rl = require('readline').createInterface({
+	  input: require('fs').createReadStream('input/input13.txt'),
+	  output: process.stdout,
+	  terminal: false
+  });
 
 rl.on('line', processLine);
 
