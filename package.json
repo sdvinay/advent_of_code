@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fs": "0.0.2",
+    "iterative-permutation": "^1.0.0",
     "md5": "^2.0.0"
   }
 }
