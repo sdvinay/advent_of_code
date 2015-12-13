@@ -54,6 +54,15 @@ rl.on('line', processLine);
 rl.on('close', function () {
 		console.log(happiness);
 		console.log(findBestOrdering(happiness));
+
+		// Part 2, add me
+		happiness['me'] = {};
+		for (person in happiness) {
+			happiness[person]['me'] = 0;
+			happiness['me'][person] = 0;
+		}
+		console.log(findBestOrdering(happiness));
+
 });
 
 /*
