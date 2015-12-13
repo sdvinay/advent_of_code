@@ -37,11 +37,20 @@ function enactAction(action, x0, y0, x1, y1) {
 	for (var i = x0; i <= x1; i++) {
 		for (var j = y0; j <= y1; j++) {
 			switch(action) {
+				/* this is for part 1
 				case TURNOFF: bulbs[i][j] = 0; break;
 				case TURNON:  bulbs[i][j] = 1 ; break;
 				case TOGGLE : 
 					bulbs[i][j] = (bulbs[i][j]>0 ? 0 : 1);
 					break;
+				//	*/
+				//* this is for part 2
+				case TURNOFF:
+					bulbs[i][j] = (bulbs[i][j]>0 ? bulbs[i][j]-1 : 0);
+					break;
+				case TURNON:  bulbs[i][j] += 1 ; break;
+				case TOGGLE : bulbs[i][j] += 2 ; break;
+				// */
 			}			
 		}
 	}
@@ -65,7 +74,9 @@ rl.on('close', function () {
 		console.log(countBrightness(bulbs));
 });
 
+/*
 console.log(processLine('toggle 537,781 through 687,941'));
 console.log(processLine('turn on 226,196 through 599,390'));
 console.log(processLine('turn off 199,133 through 461,193'));
+*/
 
