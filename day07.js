@@ -5,15 +5,16 @@ var rules = {};
 var values = {};
 
 // Regular expressions for the different types of instructions
-var reInt = /^(\d+) -> ([a-z]+)/;
-var reAndOrNum = /^(\d+) (AND|OR) ([a-z]+) -> ([a-z]+)/;
-var reAndOr = /^([a-z]+) (AND|OR) ([a-z]+) -> ([a-z]+)/;
+var reAndOr = /^(\w+) (AND|OR) ([a-z]+) -> ([a-z]+)/;
 var reNot = /^NOT ([a-z]+) -> ([a-z]+)/;
 var reShift = /^([a-z]+) (.SHIFT) (\d+) -> ([a-z]+)/;
-var rePipe = /^([a-z]+) -> ([a-z]+)/;
+var rePipe = /^(\w+) -> ([a-z]+)/;
 
 // Get memoized if available, otherwise evaluate
 function get(name) {
+	if (!isNaN(parseInt(name))) {
+		return parseInt(name);
+	}
 	if (name in values) {
 		return values[name];
 	} else {
@@ -29,8 +30,6 @@ function memoize(name, val) {
 
 // An instructionProcessor is a regexp and the function that creates a rule from the matches
 var instructionProcessors = [ 
-	{re: reInt, fn: createIntRule},
-	{re: reAndOrNum, fn: createAndOrNumRule},
 	{re: reAndOr, fn: createAndOrRule},
 	{re: reNot, fn: createNotRule},
 	{re: rePipe, fn: createPipeRule},
@@ -48,25 +47,6 @@ function processLine(str) {
 		}
 	}
 	throw new Error('line didnt match pattern: '+str);
-}
-
-// These are all the create*Rule functions, for each instruction type
-function createIntRule(matches) {
-	var val = parseInt(matches[1]);
-	rules[matches[2]] = function() { return val;};
-	values[matches[2]] = val;
-}
-
-function createAndOrNumRule(matches) {
-	var v1 = parseInt(matches[1]);
-	var v2 = matches[3];
-	var name = matches[4];
-	if (matches[2] === 'OR') {
-		rules[name] = function() { return (v1 | get(v2));};
-	}
-	if (matches[2] === 'AND') {
-		rules[name] = function() { return (v1 & get(v2));};
-	}
 }
 
 function createAndOrRule(matches) {
@@ -102,7 +82,7 @@ function createShiftRule(matches) {
 function createPipeRule(matches) {
 	var v1 = matches[1];
 	var name = matches[2];
-	rules[name] = function() { var val = get(v1); values[name]=val; return val;};
+	rules[name] = function() { return get(v1);};
 }
 
 
