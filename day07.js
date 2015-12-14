@@ -91,12 +91,12 @@ var rl = require('readline').createInterface({
 rl.on('line', processLine);
 
 rl.on('close', function () {
-		console.log(rules);
-		console.log(values);
+		var a = rules['a']();
+		console.log(a);
+		values = {};
+		values['b'] = a;
 		console.log(rules['a']());
-		console.log(rules['h']());
-		console.log(rules['i']());
-		console.log(values);
+
 		debugger;
 });
 // */
