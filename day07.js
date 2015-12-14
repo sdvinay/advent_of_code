@@ -17,8 +17,10 @@ function get(name) {
 	}
 	if (name in values) {
 		return values[name];
-	} else {
+	} else if (name in rules) {
 		return memoize(name, rules[name]());
+	} else {
+		throw new Error ('Cant get value for name (no memoized value or rule): ' + name);
 	}
 }
 
@@ -72,7 +74,7 @@ function createNotRule(dest, matches) {
 
 function createShiftRule(dest, matches) {
 	var in1 = matches[1];
-	var dist = parseInt(matches[3]);
+	var dist = parseInt(matches[3]); // assumes dist is a literal, not a reference
 	switch(matches[2]) {
 		case 'LSHIFT':
 			rules[dest] = function() { return get(in1) << dist;};
