@@ -53,11 +53,15 @@ function processLine(str) {
 function createAndOrRule(dest, matches) {
 	var in1 = matches[1];
 	var in2 = matches[3];
-	if (matches[2] === 'OR') {
-		rules[dest] = function() { return get(in1) | get(in2);};
-	}
-	if (matches[2] === 'AND') {
-		rules[dest] = function() { return get(in1) & get(in2);};
+	switch(matches[2]) {
+		case 'OR':
+			rules[dest] = function() { return get(in1) | get(in2);};
+			break;
+		case 'AND':
+			rules[dest] = function() { return get(in1) & get(in2);};
+			break;
+		default:
+			throw new Error('line didnt match pattern: '+str);
 	}
 }
 
@@ -69,11 +73,15 @@ function createNotRule(dest, matches) {
 function createShiftRule(dest, matches) {
 	var in1 = matches[1];
 	var dist = parseInt(matches[3]);
-	if (matches[2] === 'LSHIFT') {
-		rules[dest] = function() { return get(in1) << dist;};
-	}
-	if (matches[2] === 'RSHIFT') {
-		rules[dest] = function() { return get(in1) >> dist;};
+	switch(matches[2]) {
+		case 'LSHIFT':
+			rules[dest] = function() { return get(in1) << dist;};
+			break;
+		case 'RSHIFT':
+			rules[dest] = function() { return get(in1) >> dist;};
+			break;
+		default:
+			throw new Error('line didnt match pattern: '+str);
 	}
 }
 
