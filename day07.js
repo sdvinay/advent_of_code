@@ -67,7 +67,7 @@ function createAndOrRule(dest, matches) {
 	var in1 = matches[1];
 	var in2 = matches[3];
 	switch(matches[2]) {
-		case 'OR': rules[dest] = function() { return get(in1) | get(in2);}; break;
+		case 'OR' : rules[dest] = function() { return get(in1) | get(in2);}; break;
 		case 'AND': rules[dest] = function() { return get(in1) & get(in2);}; break;
 		default: throw new Error('line didnt match pattern: '+str);
 	}
