@@ -1,6 +1,6 @@
 // Construct and evaluate a "circuit", based on instructions
 // Each instruction will become a function that lives in rules
-// Each rule is only evaluated once, and will memoize its value in values
+// Each rule is only evaluated once, and will memoize its result in values
 var rules = {};
 var values = {};
 
@@ -10,7 +10,7 @@ var reNot = /^NOT ([a-z]+) -> ([a-z]+)/;
 var reShift = /^([a-z]+) (.SHIFT) (\d+) -> ([a-z]+)/;
 var rePipe = /^(\w+) -> ([a-z]+)/;
 
-// Get memoized if available, otherwise evaluate
+// Get memoized value if available, otherwise evaluate the rule (and memoize the result)
 function get(name) {
 	if (!isNaN(parseInt(name))) {
 		return parseInt(name);
@@ -36,7 +36,7 @@ var instructionProcessors = [
 	{re: reShift, fn: createShiftRule}
 ];
 
-// match the instruction to its type, and create the corresponding rule
+// match the instruction by regexp, and create the corresponding rule
 function processLine(str) {
 	for (var i in instructionProcessors) {
 		var proc = instructionProcessors[i];
@@ -50,39 +50,39 @@ function processLine(str) {
 }
 
 function createAndOrRule(matches) {
-	var v1 = matches[1];
-	var v2 = matches[3];
-	var name = matches[4];
+	var in1 = matches[1];
+	var in2 = matches[3];
+	var dest = matches[4];
 	if (matches[2] === 'OR') {
-		rules[name] = function() { var val = get(v1) | get(v2); values[name]=val; return val;};
+		rules[dest] = function() { return get(in1) | get(in2);};
 	}
 	if (matches[2] === 'AND') {
-		rules[name] = function() { var val = get(v1) & get(v2); values[name]=val; return val;};
+		rules[dest] = function() { return get(in1) & get(in2);};
 	}
 }
 
 function createNotRule(matches) {
-	var v1 = matches[1];
-	var name = matches[2];
-	rules[name] = function() { var val = ((~get(v1))+(2<<15)); values[name]=val; return val;};
+	var in1 = matches[1];
+	var dest = matches[2];
+	rules[dest] = function() { return ((~get(in1))+(2<<15));};
 }
 
 function createShiftRule(matches) {
-	var v1 = matches[1];
-	var dist = matches[3];
-	var name = matches[4];
+	var in1 = matches[1];
+	var dist = parseInt(matches[3]);
+	var dest = matches[4];
 	if (matches[2] === 'LSHIFT') {
-		rules[name] = function() { var val = get(v1) << dist; values[name] = val; return val; };
+		rules[dest] = function() { return get(in1) << dist;};
 	}
 	if (matches[2] === 'RSHIFT') {
-		rules[name] = function() { var val = get(v1) >> dist; values[name] = val; return val; };
+		rules[dest] = function() { return get(in1) >> dist;};
 	}
 }
 
 function createPipeRule(matches) {
-	var v1 = matches[1];
-	var name = matches[2];
-	rules[name] = function() { return get(v1);};
+	var in1 = matches[1];
+	var dest = matches[2];
+	rules[dest] = function() { return get(in1);};
 }
 
 
@@ -96,13 +96,12 @@ var rl = require('readline').createInterface({
 rl.on('line', processLine);
 
 rl.on('close', function () {
-		var a = rules['a']();
+		var a = get('a');
 		console.log(a);
+		// for part 2, we're overriding b with the old value of a
 		values = {};
 		values['b'] = a;
-		console.log(rules['a']());
-
-		debugger;
+		console.log(get('a'));
 });
 // */
 
