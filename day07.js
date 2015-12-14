@@ -28,8 +28,7 @@ function memoize(name, val) {
 var instructionProcessors = [ 
 	{fn: createPipeRule,  re: /^(\w+) -> ([a-z]+)/},
 	{fn: createNotRule,   re: /^NOT ([a-z]+) -> ([a-z]+)/},
-	{fn: createAndOrRule, re: /^(\w+) (AND|OR) ([a-z]+) -> ([a-z]+)/},
-	{fn: createShiftRule, re: /^([a-z]+) (.SHIFT) (\d+) -> ([a-z]+)/}
+	{fn: createBinaryOpRule, re: /^(\w+) (AND|OR|.SHIFT) (\w+) -> ([a-z]+)/}
 ];
 
 // match the instruction by regexp, and create the corresponding rule
@@ -54,29 +53,20 @@ function createPipeRule(dest, matches) {
 
 function createNotRule(dest, matches) {
 	var in1 = matches[1];
-	rules[dest] = function() { return ((~get(in1))+(2<<15));};
+	rules[dest] = function() { return ((~get(in1))+(2<<15));}; // convert to unsigned 16-bit int
 }
 
-function createAndOrRule(dest, matches) {
+function createBinaryOpRule(dest, matches) {
 	var in1 = matches[1];
 	var in2 = matches[3];
 	switch(matches[2]) {
-		case 'OR' : rules[dest] = function() { return get(in1) | get(in2);}; break;
-		case 'AND': rules[dest] = function() { return get(in1) & get(in2);}; break;
+		case 'OR'    : rules[dest] = function() { return get(in1) |  get(in2);}; break;
+		case 'AND'   : rules[dest] = function() { return get(in1) &  get(in2);}; break;
+		case 'LSHIFT': rules[dest] = function() { return get(in1) << get(in2);}; break;
+		case 'RSHIFT': rules[dest] = function() { return get(in1) >> get(in2);}; break;
 		default: throw new Error('line didnt match pattern: '+str);
 	}
 }
-
-function createShiftRule(dest, matches) {
-	var in1 = matches[1];
-	var dist = parseInt(matches[3]); // assumes dist is a literal, not a reference
-	switch(matches[2]) {
-		case 'LSHIFT': rules[dest] = function() { return get(in1) << dist;}; break;
-		case 'RSHIFT': rules[dest] = function() { return get(in1) >> dist;}; break;
-		default: throw new Error('line didnt match pattern: '+str);
-	}
-}
-
 
 //*
 var rl = require('readline').createInterface({
