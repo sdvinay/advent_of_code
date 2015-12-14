@@ -4,12 +4,6 @@
 var rules = {};
 var values = {};
 
-// Regular expressions for the different types of instructions
-var reAndOr = /^(\w+) (AND|OR) ([a-z]+) -> ([a-z]+)/;
-var reNot = /^NOT ([a-z]+) -> ([a-z]+)/;
-var reShift = /^([a-z]+) (.SHIFT) (\d+) -> ([a-z]+)/;
-var rePipe = /^(\w+) -> ([a-z]+)/;
-
 // Get memoized value if available, otherwise evaluate the rule (and memoize the result)
 function get(name) {
 	if (!isNaN(parseInt(name))) {
@@ -32,10 +26,10 @@ function memoize(name, val) {
 
 // An instructionProcessor is a regexp and the function that creates a rule from the matches
 var instructionProcessors = [ 
-	{re: reAndOr, fn: createAndOrRule},
-	{re: reNot, fn: createNotRule},
-	{re: rePipe, fn: createPipeRule},
-	{re: reShift, fn: createShiftRule}
+	{fn: createPipeRule,  re: /^(\w+) -> ([a-z]+)/},
+	{fn: createNotRule,   re: /^NOT ([a-z]+) -> ([a-z]+)/},
+	{fn: createAndOrRule, re: /^(\w+) (AND|OR) ([a-z]+) -> ([a-z]+)/},
+	{fn: createShiftRule, re: /^([a-z]+) (.SHIFT) (\d+) -> ([a-z]+)/}
 ];
 
 // match the instruction by regexp, and create the corresponding rule
@@ -45,7 +39,7 @@ function processLine(str) {
 		var matches = str.match(proc.re);
 		if (matches) {
 			var dest = matches[matches.length-1]; // assumes last match is the destination (e.g '-> x')
-			proc.fn(dest, matches);
+			proc.fn(dest, matches); // call to create the rule
 			return;
 		}
 	}
