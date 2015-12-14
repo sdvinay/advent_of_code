@@ -17,9 +17,15 @@ function get(name) {
 	if (name in values) {
 		return values[name];
 	} else {
-		return rules[name]();
+		return memoize(name, rules[name]());
 	}
 }
+
+function memoize(name, val) {
+	values[name] = val;
+	return val;
+}
+
 
 // An instructionProcessor is a regexp and the function that creates a rule from the matches
 var instructionProcessors = [ 
@@ -56,10 +62,10 @@ function createAndOrNumRule(matches) {
 	var v2 = matches[3];
 	var name = matches[4];
 	if (matches[2] === 'OR') {
-		rules[name] = function() { var val = v1 | get(v2); values[name]=val; return val;};
+		rules[name] = function() { return (v1 | get(v2));};
 	}
 	if (matches[2] === 'AND') {
-		rules[name] = function() { var val = v1 & get(v2); values[name]=val; return val;};
+		rules[name] = function() { return (v1 & get(v2));};
 	}
 }
 
