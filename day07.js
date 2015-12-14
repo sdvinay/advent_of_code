@@ -52,19 +52,10 @@ function processLine(str) {
 	throw new Error('line didnt match pattern: '+str);
 }
 
-function createAndOrRule(dest, matches) {
+// These are the rules for each specific instruction type
+function createPipeRule(dest, matches) {
 	var in1 = matches[1];
-	var in2 = matches[3];
-	switch(matches[2]) {
-		case 'OR':
-			rules[dest] = function() { return get(in1) | get(in2);};
-			break;
-		case 'AND':
-			rules[dest] = function() { return get(in1) & get(in2);};
-			break;
-		default:
-			throw new Error('line didnt match pattern: '+str);
-	}
+	rules[dest] = function() { return get(in1);};
 }
 
 function createNotRule(dest, matches) {
@@ -72,24 +63,24 @@ function createNotRule(dest, matches) {
 	rules[dest] = function() { return ((~get(in1))+(2<<15));};
 }
 
+function createAndOrRule(dest, matches) {
+	var in1 = matches[1];
+	var in2 = matches[3];
+	switch(matches[2]) {
+		case 'OR': rules[dest] = function() { return get(in1) | get(in2);}; break;
+		case 'AND': rules[dest] = function() { return get(in1) & get(in2);}; break;
+		default: throw new Error('line didnt match pattern: '+str);
+	}
+}
+
 function createShiftRule(dest, matches) {
 	var in1 = matches[1];
 	var dist = parseInt(matches[3]); // assumes dist is a literal, not a reference
 	switch(matches[2]) {
-		case 'LSHIFT':
-			rules[dest] = function() { return get(in1) << dist;};
-			break;
-		case 'RSHIFT':
-			rules[dest] = function() { return get(in1) >> dist;};
-			break;
-		default:
-			throw new Error('line didnt match pattern: '+str);
+		case 'LSHIFT': rules[dest] = function() { return get(in1) << dist;}; break;
+		case 'RSHIFT': rules[dest] = function() { return get(in1) >> dist;}; break;
+		default: throw new Error('line didnt match pattern: '+str);
 	}
-}
-
-function createPipeRule(dest, matches) {
-	var in1 = matches[1];
-	rules[dest] = function() { return get(in1);};
 }
 
 
