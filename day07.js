@@ -42,17 +42,17 @@ function processLine(str) {
 		var proc = instructionProcessors[i];
 		var matches = str.match(proc.re);
 		if (matches) {
-			proc.fn(matches);
+			var dest = matches[matches.length-1]; // assumes last match is the destination (e.g '-> x')
+			proc.fn(dest, matches);
 			return;
 		}
 	}
 	throw new Error('line didnt match pattern: '+str);
 }
 
-function createAndOrRule(matches) {
+function createAndOrRule(dest, matches) {
 	var in1 = matches[1];
 	var in2 = matches[3];
-	var dest = matches[4];
 	if (matches[2] === 'OR') {
 		rules[dest] = function() { return get(in1) | get(in2);};
 	}
@@ -61,16 +61,14 @@ function createAndOrRule(matches) {
 	}
 }
 
-function createNotRule(matches) {
+function createNotRule(dest, matches) {
 	var in1 = matches[1];
-	var dest = matches[2];
 	rules[dest] = function() { return ((~get(in1))+(2<<15));};
 }
 
-function createShiftRule(matches) {
+function createShiftRule(dest, matches) {
 	var in1 = matches[1];
 	var dist = parseInt(matches[3]);
-	var dest = matches[4];
 	if (matches[2] === 'LSHIFT') {
 		rules[dest] = function() { return get(in1) << dist;};
 	}
@@ -79,9 +77,8 @@ function createShiftRule(matches) {
 	}
 }
 
-function createPipeRule(matches) {
+function createPipeRule(dest, matches) {
 	var in1 = matches[1];
-	var dest = matches[2];
 	rules[dest] = function() { return get(in1);};
 }
 
