@@ -17,7 +17,7 @@ console.log(calcRibbonNeeded(2,3,4));
 console.log(calcRibbonNeeded(1,1,10));
 
 var rl = require('readline').createInterface({
-	  input: require('fs').createReadStream('input/input2.txt')
+	  input: require('fs').createReadStream('input/input02.txt')
   });
 
 rl.on('line', function (line) {

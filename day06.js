@@ -11,7 +11,7 @@ for (var i = 0; i < SIZE; i++) {
 var re = /(\D+)(\d+),(\d+) through (\d+),(\d+)/;
 
 var rl = require('readline').createInterface({
-	  input: require('fs').createReadStream('input/input6.txt')
+	  input: require('fs').createReadStream('input/input06.txt')
   });
 
 var TOGGLE = -1;
