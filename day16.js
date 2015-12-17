@@ -21,6 +21,7 @@ processLine('Sue 488: cars: 7, akitas: 10, samoyeds: 5'); //488
 function eq(p1, p2) { return p1 === p2; }
 function lt(p1, p2) { return p1 < p2; }
 function gt(p1, p2) { return p1 > p2; }
+
 function getComparator(prop) {
 	switch(prop) {
 		case 'cats':
@@ -37,7 +38,6 @@ function getComparator(prop) {
 function matchAunts(aunt1, aunt2) {
 	for (prop in aunt2) {
 		var comparator = getComparator(prop);
-		debugger;
 		if (comparator(aunt1[prop], aunt2[prop]) === false) {
 			return false;
 		}
@@ -45,7 +45,6 @@ function matchAunts(aunt1, aunt2) {
 	return true;
 }
 
-var re = /Sue (\d+): (.*)/;
 function processLine(line) {
 	var matches = line.match(/Sue (\d+): (\w+): (\d+), (\w+): (\d+), (\w+): (\d+)/);
 	var aunt = {};
@@ -57,16 +56,12 @@ function processLine(line) {
 	}
 }
 
-function onClose() {
-
-}
 var rl = require('readline').createInterface({
 	  input: require('fs').createReadStream('input/input16.txt'), 
 	  output: process.stdout,
 	  terminal: false
   });
 rl.on('line', processLine);
-rl.on('close', onClose);
 
 // */
 
