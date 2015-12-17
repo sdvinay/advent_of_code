@@ -10,7 +10,7 @@ var needle = {children: 3,
 	perfumes: 1
 };
 
-//* // literal/in-line test cases go here
+/* // literal/in-line test cases go here
 console.log(matchAunts(needle, {pomeranians: 10, cars: 7, trees: 2})); //47
 console.log(matchAunts(needle, {pomeranians: 3})); // should match
 processLine('Sue 488: cars: 7, akitas: 10, samoyeds: 5'); //488
@@ -18,10 +18,27 @@ processLine('Sue 488: cars: 7, akitas: 10, samoyeds: 5'); //488
 // */
 
 //*
+function eq(p1, p2) { return p1 === p2; }
+function lt(p1, p2) { return p1 < p2; }
+function gt(p1, p2) { return p1 > p2; }
+function getComparator(prop) {
+	switch(prop) {
+		case 'cats':
+		case 'trees':
+			return (lt); // comment out lines 28,31 to go back to part 1
+		case 'pomeranians':
+		case 'goldfish':
+			return (gt);
+		default:
+			return (eq);
+	}
+}
 
 function matchAunts(aunt1, aunt2) {
 	for (prop in aunt2) {
-		if (aunt2[prop] !== aunt1[prop]) {
+		var comparator = getComparator(prop);
+		debugger;
+		if (comparator(aunt1[prop], aunt2[prop]) === false) {
 			return false;
 		}
 	}
