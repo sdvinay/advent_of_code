@@ -14,21 +14,30 @@ function addRule(matches) {
 }
 
 // performs one step, getting all possible unique replacements
-function getAllReplacements(molecule) {
-	var atoms = molecule.match(/([A-Ze][abcdf-z]*)/g);
+function getAllReplacements(molecules) {
 	var outputs = [];
-	for (var i = 0; i < atoms.length; i++) {
-		if (atoms[i] in replacement_rules) {
-			var replacements = replacement_rules[atoms[i]];
-			var before = atoms.slice(0,i).join('');
-			var after = atoms.slice(i+1).join('');
-			for (var j = 0; j < replacements.length; j++) {
-				var output = before + replacements[j] + after;
-				if (outputs.indexOf(output) < 0) outputs.push(output);
+	for (var h=0; h < molecules.length; h++) {
+		var molecule = molecules[h];
+		var atoms = molecule.match(/([A-Ze][abcdf-z]*)/g);
+		for (var i = 0; i < atoms.length; i++) {
+			if (atoms[i] in replacement_rules) {
+				var replacements = replacement_rules[atoms[i]];
+				var before = atoms.slice(0,i).join('');
+				var after = atoms.slice(i+1).join('');
+				for (var j = 0; j < replacements.length; j++) {
+					var output = before + replacements[j] + after;
+					if (outputs.indexOf(output) < 0) outputs.push(output);
+				}
 			}
 		}
 	}
 	return outputs;
+}
+
+function produceMolecule(input, output) {
+	var iterations = 0;
+	// TODO
+	return iterations;
 }
 
 function processLine(line) {
@@ -38,8 +47,10 @@ function processLine(line) {
 		addRule(matches);
 	} else if (line.length>0) {
 		//otherwise perform a calibration
-		var outputs = getAllReplacements(line);
+		var outputs = getAllReplacements([line]);
 		console.log(outputs.length);
+		var iterations = produceMolecule('e', line);
+		console.log(iterations);
 	}
 
 }
