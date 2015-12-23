@@ -49,13 +49,15 @@ function enumeratePlayers() {
 
 var players = enumeratePlayers();
 var lowCost = 10000;
+var highCost = 0;
 for (var i = 0; i < players.length; i++) {
 	var winner = playFight(players[i], boss);
 	if (winner) {
-		debugger;
 		if (players[i].cost < lowCost) lowCost = players[i].cost;
 		console.log(players[i]);
+	} else {
+		if (players[i].cost > highCost) highCost = players[i].cost;
 	}
 }
-console.log(lowCost);
+console.log(lowCost, highCost);
 
