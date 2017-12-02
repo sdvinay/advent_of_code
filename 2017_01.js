@@ -4,9 +4,10 @@ inputStr = '57276274387944537823652626177853384411146325384494935924454336611953
 
 function sumMatchingDigits(inputStr) {
 	var sum = 0;
-	str = inputStr + inputStr[0]
+	str = inputStr;
+	var offset = str.length/2;
 	for (var i = 0; i < str.length; i++) {
-		if (str[i] == str[i+1]) {
+		if (str[i] == str[(i+offset) % str.length]) {
 			sum = sum + parseInt(str[i]);
 		}
 	}
