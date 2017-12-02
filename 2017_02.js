@@ -1,4 +1,7 @@
-//* // literal/in-line test cases go here
+/* // literal/in-line test cases go here
+console.log(findDivisor([5,9, 2, 8]));
+console.log(findDivisor([9, 4, 7, 3]));
+console.log(findDivisor([3, 8, 6, 5]));
 // */
 
 //*
@@ -10,9 +13,21 @@ function calcChecksum(fields) {
 	return max - min;
 }
 
+function findDivisor(fields) {
+	for (let x of fields) {
+		for (let y of fields) {
+			if (x != y) {
+				if (x % y == 0) {
+					return x/y;
+				}
+			}
+		}
+	}
+}
+
 function processLine(line) {
 	var fields = line.split("	").map(x => parseInt(x));
-	checksum = checksum + calcChecksum(fields);
+	checksum = checksum + findDivisor(fields);
 	// console.log(checksum);
 }
 
