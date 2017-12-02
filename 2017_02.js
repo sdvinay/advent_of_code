@@ -4,11 +4,15 @@
 //*
 var checksum = 0;
 
-function processLine(line) {
-	var fields = line.split("	").map(x => parseInt(x));
+function calcChecksum(fields) {
 	var min = Math.min(...fields);
 	var max = Math.max(...fields);
-	checksum = checksum + max - min;
+	return max - min;
+}
+
+function processLine(line) {
+	var fields = line.split("	").map(x => parseInt(x));
+	checksum = checksum + calcChecksum(fields);
 	// console.log(checksum);
 }
 
