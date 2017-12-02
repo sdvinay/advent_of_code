@@ -5,7 +5,6 @@ console.log(findDivisor([3, 8, 6, 5]));
 // */
 
 //*
-var checksum = 0;
 
 function calcChecksum(fields) {
 	var min = Math.min(...fields);
@@ -16,19 +15,18 @@ function calcChecksum(fields) {
 function findDivisor(fields) {
 	for (let x of fields) {
 		for (let y of fields) {
-			if (x != y) {
-				if (x % y == 0) {
-					return x/y;
-				}
+			if (x%y == 0 && x>y) {
+				return x/y;
 			}
 		}
 	}
 }
 
+var checksum = 0;
+
 function processLine(line) {
 	var fields = line.split("	").map(x => parseInt(x));
 	checksum = checksum + findDivisor(fields);
-	// console.log(checksum);
 }
 
 function onClose() {
