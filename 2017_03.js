@@ -11,12 +11,12 @@
 
 function computeDistance(num) {
 	var ringDepth =  computeRingDepth(num);
-	var ringSideLength = ringDepth+1;
-	var stepsIntoRing = num - (ringDepth * ringDepth);
+	var ringSideLength = ringDepth*2;
+	var stepsIntoRing = num - Math.pow(ringDepth*2-1, 2);
 	var stepsFromCorner = stepsIntoRing % ringSideLength;
 	var stepsFromCenterOfRing = Math.abs((ringSideLength/2) - stepsFromCorner);
 
-	return stepsFromCenterOfRing;
+	return ringDepth + stepsFromCenterOfRing;
 }
 
 function computeRingDepth(num) {
