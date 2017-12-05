@@ -10,6 +10,7 @@
 //        Other is distance from the middle of the side
 
 function computeDistance(num) {
+	if (num === 1) { return 0; }
 	var ringDepth =  computeRingDepth(num);
 	var ringSideLength = ringDepth*2;
 	var stepsIntoRing = num - Math.pow(ringSideLength-1, 2);
