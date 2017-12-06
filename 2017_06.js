@@ -30,7 +30,7 @@ function findCycle(banks) {
 		hash = hashState(banks);
 		steps++;
 	}
-	return steps-seenStates[hash];
+	return [steps, steps-seenStates[hash]];
 }
 
 console.log(findCycle([0, 2, 7, 0]));
