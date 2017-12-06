@@ -4,11 +4,15 @@ checkPassphrase("aa bb cc dd aa");
 
 //*
 
+function sortString(str) {
+	return str.split('').sort().join('');
+}
+
 function checkPassphrase(phrase) {
 	words = phrase.split(" ");
 	var matches = {};
 	for (var i in words) {
-		word = words[i];
+		word = sortString(words[i]);
 		if (matches[word] == true) {
 			return false;
 		}
