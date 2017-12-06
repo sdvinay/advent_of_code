@@ -1,25 +1,31 @@
 //* // literal/in-line test cases go here
+checkPassphrase("aa bb cc dd aa");
 // */
 
 //*
 
-function processLine(line) {
-	// TODO 
-	words = line.split(" ");
+function checkPassphrase(phrase) {
+	words = phrase.split(" ");
 	var matches = {};
-	debugger;
-	matches['pphsv'] = true;
-	for (var word in words) {
+	for (var i in words) {
+		word = words[i];
 		if (matches[word] == true) {
-			console.log ("found duplicate: " + word);
+			return false;
 		}
 		matches[word] = true;
+	}
+	return true;
+}
 
+var validPhrases = 0;
+function processLine(line) {
+	if (checkPassphrase(line)) {
+		validPhrases++;
 	}
 }
 
 function onClose() {
-	// TODO 
+	console.log(validPhrases);
 }
 var rl = require('readline').createInterface({
 	  input: require('fs').createReadStream('input/input2017_04.txt'), 
