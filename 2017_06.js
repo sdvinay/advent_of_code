@@ -23,12 +23,14 @@ function hashState(banks) {
 function findCycle(banks) {
 	var seenStates = {};
 	var steps = 0;
-	while (!seenStates[hashState(banks)]) {
-		seenStates[hashState(banks)] = true;
+	var hash = hashState(banks);
+	while (!seenStates[hash]) {
+		seenStates[hash] = steps;
 		banks = reallocateBlocks(banks);
+		hash = hashState(banks);
 		steps++;
 	}
-	return steps;
+	return steps-seenStates[hash];
 }
 
 console.log(findCycle([0, 2, 7, 0]));
