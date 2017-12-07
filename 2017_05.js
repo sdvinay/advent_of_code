@@ -15,8 +15,8 @@ function execMaze(maze, PartTwo) {
 	while (index >= 0 && index < mazeSize) {
 		steps++;
 		var offset = maze[index];
-		var adjustment = (PartTwo == true && offset >= 3) ? -1 : +1;
-		maze[index]+= adjustment;
+		var adjustment = (PartTwo === true && offset >= 3) ? -1 : +1;
+		maze[index] += adjustment;
 		index += offset;
 	}
 	
