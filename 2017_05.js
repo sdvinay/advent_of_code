@@ -1,7 +1,7 @@
-var Problem = { 
+var Problem = Object.freeze({ 
 	part1 : 1,
 	part2 : 2
-};
+});
 
 //* // literal/in-line test cases go here
 // */
