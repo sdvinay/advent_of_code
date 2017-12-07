@@ -4,12 +4,9 @@ var Problem = Object.freeze({
 });
 
 //* // literal/in-line test cases go here
-// */
-
 console.log(execMaze([0, 3, 0, 1, -3], Problem.part1)); // expect 5
-console.log(execMaze([0, 3, 0, 1, -3], Problem.part2));  // expect 10
-
-//*
+console.log(execMaze([0, 3, 0, 1, -3], Problem.part2)); // expect 10
+// */
 
 
 function execMaze(maze, problemPart) {
@@ -24,11 +21,10 @@ function execMaze(maze, problemPart) {
 		maze[index] += adjustment;
 		index += offset;
 	}
-	
 	return steps;
 }
 
-// Two copies of the maze, for Part 1 and Part 2
+// Two copies of the input maze, for parts 1 and 2 (since executing the maze mutates it)
 var maze1 = [];
 var maze2 = [];
 
@@ -49,5 +45,4 @@ var rl = require('readline').createInterface({
 rl.on('line', processLine);
 rl.on('close', onClose);
 
-// */
 
