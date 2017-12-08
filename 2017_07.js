@@ -19,12 +19,12 @@ function getTowerWeight(towerBase) {
 	var weight = discWeights[towerBase];
 	var children = towers[towerBase];
 	console.log(children);
-/*	if (children) {
+	if (children) {
 		for (child in towers[towerBase]) {
 			weight += getTowerWeight(towers[towerBase][child]);
 		}
 	}
-*/	return weight; // interim state, just return the weight of the base for now
+	return weight; // interim state, just return the weight of the base for now
 }
 
 function processLine(line) {
