@@ -18,9 +18,9 @@ function processLine(line) {
 	programs.push(leftFields[1]);
 	discWeights[leftFields[1]] = leftFields[2];
 
-	var match = line.match(/^\w+.*-> (.*)/);
-	if (match) {
-		children.push(...match[1].split(', '));
+	var towerMatches = line.match(/^\w+.*-> (.*)/);
+	if (towerMatches) {
+		children.push(...towerMatches[1].split(', '));
 	}
 }
 
