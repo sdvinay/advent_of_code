@@ -11,16 +11,17 @@
 var programs = [];
 var discWeights = {};
 var children = [];
-var towers = [];
+var towers = {};
 
 function processLine(line) {
 	var leftFields = line.match(/(^\w+) (\(\d+\))/);
 	programs.push(leftFields[1]);
 	discWeights[leftFields[1]] = leftFields[2];
 
-	var towerMatches = line.match(/^\w+.*-> (.*)/);
+	var towerMatches = line.match(/(^\w+).*-> (.*)/);
 	if (towerMatches) {
-		children.push(...towerMatches[1].split(', '));
+		towers[towerMatches[1]] = towerMatches[2];
+		children.push(...towerMatches[2].split(', '));
 	}
 }
 
@@ -28,6 +29,7 @@ function onClose() {
 	console.log(programs);
 	console.log(children);
 	console.log(discWeights);
+	console.log(towers);
 
 	for (i in programs) {
 		if (!children.includes(programs[i])) {
