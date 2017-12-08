@@ -17,7 +17,9 @@ var towers = {};
 // otherwise, recursively get your children
 function getTowerWeight(towerBase) {
 	var weight = discWeights[towerBase];
-/*	if (towers[towerBase]) {
+	var children = towers[towerBase];
+	console.log(children);
+/*	if (children) {
 		for (child in towers[towerBase]) {
 			weight += getTowerWeight(towers[towerBase][child]);
 		}
@@ -52,6 +54,8 @@ function onClose() {
 	}
 
 	// Tests for Part 2
+
+	console.log(getTowerWeight('xhth')); // expect 57
 	console.log(getTowerWeight('ugml')); // expect 
 	console.log(getTowerWeight('padx')); // expect 
 	console.log(getTowerWeight('fwft')); // expect 
