@@ -18,10 +18,9 @@ var towers = {};
 function getTowerWeight(towerBase) {
 	var weight = discWeights[towerBase];
 	var children = towers[towerBase];
-	console.log(children);
 	if (children) {
-		for (child in towers[towerBase]) {
-			weight += getTowerWeight(towers[towerBase][child]);
+		for (i in children) {
+			weight += getTowerWeight(children[i]);
 		}
 	}
 	return weight; // interim state, just return the weight of the base for now
@@ -34,8 +33,9 @@ function processLine(line) {
 
 	var towerMatches = line.match(/(^\w+).*-> (.*)/);
 	if (towerMatches) {
-		towers[towerMatches[1]] = towerMatches[2];
-		children.push(...towerMatches[2].split(', '));
+		var ourChildren = towerMatches[2].split(', ');
+		children.push(...ourChildren);
+		towers[towerMatches[1]] = ourChildren;
 	}
 }
 
