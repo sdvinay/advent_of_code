@@ -13,6 +13,13 @@ var discWeights = {};
 var children = [];
 var towers = {};
 
+// if a leaf node, return your own weight
+// otherwise, recursively get your children
+function getTowerWeight(towerBase, towers) {
+	var weight = discWeights[towerBase];
+	return weight; // interim state, just return the weight of the base for now
+}
+
 function processLine(line) {
 	var leftFields = line.match(/(^\w+) (\(\d+\))/);
 	programs.push(leftFields[1]);
@@ -31,12 +38,18 @@ function onClose() {
 	console.log(discWeights);
 	console.log(towers);
 
+	// Part 1
 	for (i in programs) {
 		if (!children.includes(programs[i])) {
 			console.log(programs[i]);
 			break;
 		}
 	}
+
+	// Tests for Part 2
+	console.log(getTowerWeight('ugml')); // expect 68
+	console.log(getTowerWeight('padx')); // expect 45
+	console.log(getTowerWeight('fwft')); // expect 72
 }
 var rl = require('readline').createInterface({
 	  input: require('fs').createReadStream('input/input2017_07_sample.txt'),
