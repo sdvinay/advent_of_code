@@ -22,6 +22,9 @@ print(run_program(program_from_str("2,3,0,3,99")))
 print(run_program(program_from_str("2,4,4,5,99,0")))
 print(run_program(program_from_str("1,1,1,4,99,5,6,0,99")))
 
+original_program = ''
 with open('input/input_2019_02.txt') as f:
-	print run_program(program_from_str(f.read()))
+	original_program = program_from_str(f.read()) 
+	
+print run_program(original_program)
 
