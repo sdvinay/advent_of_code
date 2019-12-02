@@ -8,6 +8,7 @@ function calcDamage(p1, p2) {
 
 var MagicMissile = { mana: 53, type: 'immediate', damage: 4};
 var Drain = { mana: 73, type: 'immediate', damage: 2, heal: 2};
+var Shield = { mana: 113, type: 'effect', duration: 6, armor: 7 };
 
 function makePlayerDecision(p1, p2) {
 	// TODO
@@ -15,14 +16,27 @@ function makePlayerDecision(p1, p2) {
 	return MagicMissile;
 }
 
+function runEffects(currentEffects, p1, p2) {
+	for (var i = 0; i < currentEffects.length; i++) {
+		if (currentEffects[i].expires > turnCounter) {
+			if (currentEffects[i].armor) {
+				p1.armor = currentEffects[i].armor;
+			}
+		}
+	}
+}
+var currentEffects = [];
 // returns mana spent if p1 wins
 // or negative mana spent if p1 loses
 function playFight(p1, p2) {
 	var manaSpent = 0;
+	var turnCounter = 0;
 	while (true) {
 		// player turn
 		// run effects TODO
+		runEffects(currentEffects, p1, p2);
 		// age/expire effects TODO
+		turnCounter++;
 		// get decision
 		console.log(p1, p2);
 		var decision = makePlayerDecision(p1, p2);
@@ -44,6 +58,7 @@ function playFight(p1, p2) {
 		// boss turn
 		// run effects TODO
 		// age/expire effects TODO
+		turnCounter++;
 		// attack 
 		p1.hit -= calcDamage(p2, p1);
 

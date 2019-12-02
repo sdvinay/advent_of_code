@@ -13,8 +13,8 @@ var discWeights = {};
 var children = [];
 var towers = {};
 
-// if a leaf node, return your own weight
-// otherwise, recursively get your children
+// start with your own weight
+// if you have children, recursively add their weights
 function getTowerWeight(towerBase) {
 	var weight = discWeights[towerBase];
 	var children = towers[towerBase];
@@ -24,6 +24,30 @@ function getTowerWeight(towerBase) {
 		}
 	}
 	return weight; // interim state, just return the weight of the base for now
+}
+
+function findUnbalancedPlate(towerBase) {
+	console.log("findUnbalancedPlate " + towerBase);
+	var unbalanced = false
+	var children = towers[towerBase];
+	if (children) {
+		console.log(children);
+		var childWeight = getTowerWeight(children[0]);
+		for (i in children) {
+			if (getTowerWeight(children[i]) != childWeight) {
+				unbalanced = true;
+			}
+		}
+		if (unbalanced) {
+			var unbalancedChild = children.find(child => findUnbalancedPlate(child));
+			if (unbalancedChild) {
+				return children[i];
+			}
+
+		}
+	}
+	return unbalanced ? towerBase : false;
+
 }
 
 function processLine(line) {
@@ -59,6 +83,10 @@ function onClose() {
 	console.log(getTowerWeight('ugml')); // expect 
 	console.log(getTowerWeight('padx')); // expect 
 	console.log(getTowerWeight('fwft')); // expect 
+
+	console.log(findUnbalancedPlate('tknk'));
+	console.log(findUnbalancedPlate('ugml'));
+	console.log(findUnbalancedPlate('padx'));
 }
 var rl = require('readline').createInterface({
 	  input: require('fs').createReadStream('input/input2017_07_sample.txt'),
