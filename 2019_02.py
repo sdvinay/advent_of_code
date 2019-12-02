@@ -22,9 +22,19 @@ print(run_program(program_from_str("2,3,0,3,99")))
 print(run_program(program_from_str("2,4,4,5,99,0")))
 print(run_program(program_from_str("1,1,1,4,99,5,6,0,99")))
 
-original_program = ''
+original_program = []
 with open('input/input_2019_02.txt') as f:
 	original_program = program_from_str(f.read()) 
 	
-print run_program(original_program)
+program = list(original_program)
+print run_program(program)
+
+for noun in range(99):
+	for verb in range(99):
+		program = list(original_program)
+		program[1] = noun
+		program[2] = verb
+		output = run_program(program)[0]
+		if output == 19690720:
+			print (100*noun+verb)
 
