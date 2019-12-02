@@ -1,5 +1,3 @@
-import fileinput
-
 def fuel_required(mass):
 	if mass < 6: return 0
 	return int(mass/3)-2
