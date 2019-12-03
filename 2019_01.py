@@ -20,7 +20,7 @@ def test():
 test()
 
 # The instructions explicitly say to compute fuel requirements on an item-by-item
-# basis, (including on fuel amounts in Part 2) rather than on total mass :shrug:
+# basis (including on fuel amounts in Part 2), rather than on total mass :shrug:
 total1 = 0
 total2 = 0
 with open('input/input_2019_01.txt') as f:
@@ -28,6 +28,5 @@ with open('input/input_2019_01.txt') as f:
 for line in lines:
 	total1 += fuel_burned(int(line))
 	total2 += fuel_required(int(line))
-
 print(total1, total2)
 
