@@ -6,18 +6,20 @@ unit_vectors = { 'R': (1, 0), 'L': (-1, 0), 'D': (0, -1), 'U': (0, 1)}
 
 def points_in_path(path):
 	position = (0, 0)
-	points = Set()
+	step_count = 0
+	points = {}
 	for vector in path.split(","):
 		direction = unit_vectors[vector[0]]
 		distance = int(vector[1:])
 		for i in range(distance):
 			position = (position[0]+direction[0], position[1]+direction[1])
-			points.add(position)
+			step_count++
+			points[position]=step_count
 	return points
 		
 def find_nearest_collision(path1, path2):
-	p1 = points_in_path(path1)
-	p2 = points_in_path(path2)
+	p1 = keys(points_in_path(path1))
+	p2 = keys(points_in_path(path2))
 	collisions = p1 & p2
 	dists = [abs(pt[0])+abs(pt[1]) for pt in collisions]
 	return min(dists)
