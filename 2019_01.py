@@ -29,7 +29,8 @@ total2 = 0
 with open(INPUT_FILE) as f:
 	lines = f.readlines()
 for line in lines:
-	total1 += fuel_burned(int(line))
-	total2 += fuel_required(int(line))
+	mass = int(line)
+	total1 += fuel_burned(mass)
+	total2 += fuel_required(mass)
 print(total1, total2)
 
