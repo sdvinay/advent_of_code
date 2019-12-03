@@ -1,15 +1,14 @@
 # fuel burned to transport mass (Part 1)
 def fuel_burned(mass):
-	if mass < 6: return 0
-	return int(mass/3)-2
+	return ((int(mass/3)-2) if mass >= 6 else 0)
 
 # fuel_required accounts iteratively for including the fuel in the mass (Part 2)
 def fuel_required(mass):
 	total_fuel = 0
-	fuel = fuel_burned(mass)
-	while (fuel>0):
-		total_fuel += fuel
-		fuel = fuel_burned(fuel)
+	incremental_fuel = fuel_burned(mass)
+	while (incremental_fuel>0):
+		total_fuel += incremental_fuel
+		incremental_fuel = fuel_burned(incremental_fuel)
 	return total_fuel
 
 # these are the test inputs provided in the problem
