@@ -10,17 +10,17 @@ def total_fuel_required(mass):
 		fuel = fuel_required(fuel)
 	return total_fuel
 
-print(fuel_required(4))
-print(fuel_required(12))
-print(fuel_required(14))
-print(fuel_required(1969))
-print(fuel_required(100756))
+def test_case(input):
+	print(fuel_required(input), total_fuel_required(input))
 
-print(total_fuel_required(4))
-print(total_fuel_required(12))
-print(total_fuel_required(14))
-print(total_fuel_required(1969))
-print(total_fuel_required(100756))
+def test():
+	test_case(4)
+	test_case(12)
+	test_case(14)
+	test_case(1969)
+	test_case(100756)
+
+test()
 
 total1 = 0
 total2 = 0
