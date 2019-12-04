@@ -4,16 +4,14 @@ INPUT_END=805915
 
 def streaks(input):
 	password = str(input)
-	ptr = 0
 	streaks = []
 	current_streak = 1
-	while ptr < len(password)-1:
+	for ptr in range(len(password)-1):
 		if password[ptr] == password[ptr+1]:
 			current_streak += 1
 		else:
 			streaks.append(current_streak)
 			current_streak = 1
-		ptr += 1
 	streaks.append(current_streak)
 	return streaks
 
@@ -30,9 +28,9 @@ test()
 
 matching_1 = 0
 matching_2 = 0
-for i in range(INPUT_START, INPUT_END):
-	if non_decreasing(i):
-		my_streaks = streaks(i)
+for passwd in range(INPUT_START, INPUT_END):
+	if non_decreasing(passwd):
+		my_streaks = streaks(passwd)
 		if any(s>1  for s in my_streaks): matching_1 += 1
 		if any(s==2 for s in my_streaks): matching_2 += 1
 
