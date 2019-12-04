@@ -6,21 +6,41 @@ def has_repeat(input):
 	password = str(input)
 	return any([password[i] == password[i+1] for i in range(len(password)-1)])
 
+def streaks(input):
+	password = str(input)
+	ptr = 0
+	streaks = []
+	current_streak = 1
+	while ptr < len(password)-1:
+		if password[ptr] == password[ptr+1]:
+			current_streak += 1
+		else:
+			streaks.append(current_streak)
+			current_streak = 1
+		ptr += 1
+	streaks.append(current_streak)
+	return streaks
+
+
 def non_decreasing(input):
 	password = str(input)
 	return all([password[i] <= password[i+1] for i in range(len(password)-1)])
 
 def test():
 	for input in TEST_INPUTS:
-		print(has_repeat(input), non_decreasing(input))
+		print(input, has_repeat(input), non_decreasing(input), streaks(input))
 
 test()
 
-matching = 0
+matching_1 = 0
+matching_2 = 0
 for i in range(INPUT_START, INPUT_END):
-	if (has_repeat(i) and non_decreasing(i)): matching += 1
+	if non_decreasing(i):
+		my_streaks = streaks(i)
+		if any(s>1  for s in my_streaks): matching_1 += 1
+		if any(s==2 for s in my_streaks): matching_2 += 1
 
-print matching
+print (matching_1, matching_2)
 
 
 
