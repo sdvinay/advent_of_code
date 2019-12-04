@@ -4,8 +4,7 @@ INPUT_END=805915
 
 def has_repeat(input):
 	password = str(input)
-	match = any([password[i] == password[i+1] for i in range(len(password)-1)])
-	return match
+	return any([password[i] == password[i+1] for i in range(len(password)-1)])
 
 def non_decreasing(input):
 	password = str(input)
