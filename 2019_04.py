@@ -2,10 +2,6 @@ TEST_INPUTS=[111111, 223450, 123789, 112233, 123444, 111122]
 INPUT_START=347312
 INPUT_END=805915
 
-def has_repeat(input):
-	password = str(input)
-	return any([password[i] == password[i+1] for i in range(len(password)-1)])
-
 def streaks(input):
 	password = str(input)
 	ptr = 0
@@ -28,7 +24,7 @@ def non_decreasing(input):
 
 def test():
 	for input in TEST_INPUTS:
-		print(input, has_repeat(input), non_decreasing(input), streaks(input))
+		print(input, non_decreasing(input), streaks(input))
 
 test()
 
