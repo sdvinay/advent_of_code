@@ -1,6 +1,5 @@
 TEST_INPUTS=[111111, 223450, 123789, 112233, 123444, 111122]
-INPUT_START=347312
-INPUT_END=805915
+INPUT_RANGE=[347312, 805915]
 
 def streaks(input):
 	password = str(input)
@@ -28,7 +27,7 @@ test()
 
 matching_1 = 0
 matching_2 = 0
-for passwd in range(INPUT_START, INPUT_END):
+for passwd in range(INPUT_RANGE[0], INPUT_RANGE[1]):
 	if non_decreasing(passwd):
 		my_streaks = streaks(passwd)
 		if any(s>1  for s in my_streaks): matching_1 += 1
