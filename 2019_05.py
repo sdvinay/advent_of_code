@@ -15,6 +15,8 @@ def run_program(program):
 		opcode = program[instr_ptr]
 		op = opcode % 100
 		arg_modes = int(opcode/100)
+		if op == 0:
+			print (op, instr_ptr)
 		num_inputs = operations[op][0]
 		num_outputs = operations[op][1]
 		args = []
@@ -49,14 +51,6 @@ with open(INPUT_FILE) as f:
 	original_program = program_from_str(f.read()) 
 	
 program = list(original_program)
-print run_program(program)
+run_program(program)
 
-for noun in range(99):
-	for verb in range(99):
-		program = list(original_program)
-		program[1] = noun
-		program[2] = verb
-		output = run_program(program)[0]
-		if output == TARGET_OUTPUT:
-			print (100*noun+verb)
 
