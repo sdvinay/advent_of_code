@@ -7,14 +7,14 @@ INPUT=9 #TODO pass different inputs to different executions
 # for each op code, define the number of inputs, number of outputs, and the function to run on the inputs
 # For outputs, -1 is a magic code meaning that the instruction pointer jumps to the output param if the returned value is true
 operations = {
-1: (2, 1, lambda args: args[0]+args[1]),
-2: (2, 1, lambda args: args[0]*args[1]),
-3: (0, 1, lambda args: INPUT),
-4: (1, 0, lambda args: args[0]),
+1: (2,  1, lambda args: args[0]+args[1]),
+2: (2,  1, lambda args: args[0]*args[1]),
+3: (0,  1, lambda args: INPUT),
+4: (1,  0, lambda args: args[0]),
 5: (2, -1, lambda args: 1 if args[0]<>0 else 0),
 6: (2, -1, lambda args: 1 if args[0]==0 else 0),
-7: (2, 1, lambda args: 1 if args[0]<args[1] else 0),
-8: (2, 1, lambda args: 1 if args[0]==args[1] else 0) }
+7: (2,  1, lambda args: 1 if args[0]< args[1] else 0),
+8: (2,  1, lambda args: 1 if args[0]==args[1] else 0) }
 
 def run_program(program):
 	instr_ptr = 0
@@ -38,8 +38,8 @@ def run_program(program):
 			args.append(arg)
 			instr_ptr += 1
 
-		# execute the function on the arguments
-		return_val = fn(args)
+		return_val = fn(args) # execute the function on the arguments
+
 		if num_outputs > 0: # output the return value to the reference in the output parameter
 			dest = program[instr_ptr]
 			instr_ptr += 1
