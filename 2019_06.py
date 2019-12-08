@@ -20,7 +20,7 @@ for planet in orbits.keys():
 	total_orbits += len(orbs)
 print(total_orbits)
 
-def find_common_delta(item1, item2):
+def find_orbit_delta(item1, item2):
 	path1 = set(find_orbit_path(item1))
 	path2 = set(find_orbit_path(item2))
 
@@ -28,5 +28,5 @@ def find_common_delta(item1, item2):
 	inters = path1.intersection(path2)
 	return (len(uni)-len(inters))
 
-print(find_common_delta('YOU', 'SAN'))
+print(find_orbit_delta('YOU', 'SAN'))
 
