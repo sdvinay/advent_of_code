@@ -3,20 +3,15 @@ INPUT_FILE='input/input_2019_06.txt'
 
 orbits = {}
 with open(INPUT_FILE) as f:
-	lines = f.readlines()
-
-for orbit in lines:
-	args = orbit.rstrip().split(')')
-	orbits[args[1]]=args[0]
+	for line in f.readlines():
+		values = line.rstrip().split(')')
+		orbits[values[1]]=values[0]
 	
 def find_orbits(planet):
 	if planet == 'COM': return []
 	inner = orbits[planet]
 	val = [inner] + find_orbits(inner)
 	return val
-
-
-#print(orbits)
 
 total_orbits=0
 for planet in orbits.keys():
@@ -30,6 +25,5 @@ path2 = set(find_orbits('SAN'))
 
 uni = path1.union(path2)
 inters = path1.intersection(path2)
-
 print (len(uni)-len(inters))
 
