@@ -24,3 +24,12 @@ for planet in orbits.keys():
 	print (planet, orbs)
 	total_orbits += len(orbs)
 print(total_orbits)
+
+path1 = set(find_orbits('YOU'))
+path2 = set(find_orbits('SAN'))
+
+uni = path1.union(path2)
+inters = path1.intersection(path2)
+
+print (len(uni)-len(inters))
+
