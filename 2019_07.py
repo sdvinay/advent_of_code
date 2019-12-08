@@ -6,6 +6,7 @@ TEST_INPUTS=[
 	([1,0,4,3,2], "3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0", 65210)
    	]
 NUM_PHASES=5
+INPUT_FILE='input/input_2019_07.txt'
 
 def run_circuit(program_str, phase_sequence):
 	next_input = 0
@@ -46,4 +47,10 @@ def test_finder():
 		print (expected_output, output_signal, expected_output==output_signal, expected_phase_sequence, output_sequence, expected_phase_sequence==output_sequence)
 	
 test_finder()
+
+with open(INPUT_FILE) as f:
+	program_str = f.read()
+	
+print(find_max_phase_sequence(program_str))
+
 
