@@ -30,8 +30,7 @@ def create_machine(program):
 
 # prog_input is a list of inputs to be used by instruction 3 (input).
 # returns a list of values outputted by instruction 4 (output)
-def run_program(prog_input, program):
-	machine = create_machine(program)
+def run_program(machine, prog_input):
 	output_value = None
 	while machine.program[machine.instr_ptr] != 99: # 99 is the opcode for 'halt'
 		opcode = machine.program[machine.instr_ptr]
@@ -56,9 +55,9 @@ def run_program(prog_input, program):
 		return_val = fn(args) # execute the function on the arguments
 
 		if num_outputs > 0: # output the return value to the reference in the output parameter
-			dest = program[machine.instr_ptr]
+			dest = machine.program[machine.instr_ptr]
 			machine.instr_ptr += 1
-			program[dest] = return_val
+			machine.program[dest] = return_val
 		elif num_outputs < 0: # this is a jump-if instruction.  Update machine.instr_ptr if the return val is true
 			if (return_val):
 				machine.instr_ptr=args[2] # TODO what is this magic?
