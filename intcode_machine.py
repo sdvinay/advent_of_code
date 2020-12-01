@@ -15,7 +15,7 @@ operations = {
 # returns a list of values outputted by instruction 4 (output)
 def run_program(prog_input, program):
 	instr_ptr = 0
-	output_value = []
+	output_value = None
 	while program[instr_ptr] != 99: # 99 is the opcode for 'halt'
 		opcode = program[instr_ptr]
 		instr_ptr += 1
@@ -46,7 +46,7 @@ def run_program(prog_input, program):
 			if (return_val):
 				instr_ptr=args[2] # TODO what is this magic?
 		elif num_outputs == 0: # this is an output instruction.  Print the return value, and don't modify state
-			output_value.append(return_val)
+			output_value = return_val
 	return output_value
 
 def program_from_str(inputstr):
