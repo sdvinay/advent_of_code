@@ -6,7 +6,7 @@ operations = {
 	2: (2,  1, lambda args: args[1]*args[2]), # multiply
 	3: (0,  1, lambda args: args[0].pop(0)),  # input
 	4: (1,  0, lambda args: args[1]),         # output
-	5: (2, -1, lambda args: 1 if args[1]<>0 else 0),  # jump-if-true
+	5: (2, -1, lambda args: 1 if args[1]!=0 else 0),  # jump-if-true
 	6: (2, -1, lambda args: 1 if args[1]==0 else 0),  # jump-if-false
 	7: (2,  1, lambda args: 1 if args[1]< args[2] else 0),   # less-than
 	8: (2,  1, lambda args: 1 if args[1]==args[2] else 0) }  # equals
@@ -43,7 +43,7 @@ def run_program(prog_input, program):
 			instr_ptr += 1
 			program[dest] = return_val
 		elif num_outputs < 0: # this is a jump-if instruction.  Update instr_ptr if the return val is true
-		 	if (return_val):
+			if (return_val):
 				instr_ptr=args[2] # TODO what is this magic?
 		elif num_outputs == 0: # this is an output instruction.  Print the return value, and don't modify state
 			output_value.append(return_val)
