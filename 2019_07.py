@@ -14,7 +14,7 @@ def run_circuit(program_str, phase_sequence):
 	program = intcode_machine.program_from_str(program_str)
 	for i in range(NUM_PHASES):
 		inputs = [phase_sequence[i], next_input]
-		machine = intcode_machine.create_machine(list(program))
+		machine = intcode_machine.create_machine(program)
 		next_input = intcode_machine.run_program(machine, inputs)
 
 	return next_input
