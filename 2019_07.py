@@ -12,10 +12,10 @@ INPUT_FILE='input/input_2019_07.txt'
 def run_circuit(program_str, phase_sequence):
 	next_input = 0
 	program = intcode_machine.program_from_str(program_str)
+	machines = [intcode_machine.create_machine(program) for p in phase_sequence]
 	for i in range(NUM_PHASES):
 		inputs = [phase_sequence[i], next_input]
-		machine = intcode_machine.create_machine(program)
-		next_input = intcode_machine.run_program(machine, inputs)
+		next_input = intcode_machine.run_program(machines[i], inputs)
 
 	return next_input
 
